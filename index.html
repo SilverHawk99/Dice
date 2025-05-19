@@ -50,6 +50,11 @@
       margin: 20px auto;
       max-width: 400px;
     }
+    #resetStatsBtn {
+      margin-top: 10px;
+      font-size: 14px;
+      padding: 5px 10px;
+    }
     textarea {
       width: 100%;
       height: 100px;
@@ -79,12 +84,13 @@
   </div>
 
   <canvas id="statsChart"></canvas>
+  <button id="resetStatsBtn" onclick="resetStats()">Statistik zurücksetzen</button>
 
   <script>
     const diceFaces = ['⚀','⚁','⚂','⚃','⚄','⚅'];
-    const stats = Array(11).fill(0);
     const defaultEffects = ["Du musst einmal tanzen!", "Singe ein Lied!", "Erzähle einen Witz!", "Mache 10 Liegestütze!"];
     let effects = JSON.parse(localStorage.getItem("sevenEffects")) || defaultEffects;
+    let stats = JSON.parse(localStorage.getItem("diceStats")) || Array(11).fill(0);
     let rollingDisabled = false;
 
     const ctx = document.getElementById('statsChart').getContext('2d');
@@ -124,6 +130,7 @@
       document.getElementById('result').textContent = `Gesamtergebnis: ${sum}`;
 
       stats[sum - 2]++;
+      localStorage.setItem("diceStats", JSON.stringify(stats));
       statsChart.update();
 
       if (sum === 7) {
@@ -156,6 +163,13 @@
       effects = input.split('\n').map(e => e.trim()).filter(e => e);
       localStorage.setItem("sevenEffects", JSON.stringify(effects));
       document.getElementById('editArea').style.display = 'none';
+    }
+
+    function resetStats() {
+      stats = Array(11).fill(0);
+      localStorage.setItem("diceStats", JSON.stringify(stats));
+      statsChart.data.datasets[0].data = stats;
+      statsChart.update();
     }
   </script>
 
