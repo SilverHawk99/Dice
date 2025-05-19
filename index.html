@@ -11,14 +11,21 @@
       text-align: center;
       margin-top: 50px;
     }
+    #editButton {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 8px 16px;
+      font-size: 14px;
+    }
     .dice-container {
       font-size: 100px;
       margin: 20px;
     }
-    button {
-      padding: 10px 20px;
-      font-size: 18px;
-      margin: 10px;
+    .dice {
+      display: inline-block;
+      margin: 0 20px;
+      cursor: pointer;
     }
     canvas {
       max-width: 600px;
@@ -51,13 +58,13 @@
 </head>
 <body>
 
+  <button id="editButton" onclick="toggleEdit()">Effekte bearbeiten</button>
+
   <h1>Würfelaktion</h1>
   <div class="dice-container">
-    <div class="dice" id="dice1">🎲</div>
-    <div class="dice" id="dice2">🎲</div>
+    <div class="dice" id="dice1" onclick="rollDice()">🎲</div>
+    <div class="dice" id="dice2" onclick="rollDice()">🎲</div>
   </div>
-  <button id="rollBtn" onclick="rollDice()">Würfeln</button>
-  <button onclick="toggleEdit()">Effekte bearbeiten</button>
   <p id="result"></p>
 
   <div id="effectBox">
@@ -78,6 +85,7 @@
     const stats = Array(11).fill(0);
     const defaultEffects = ["Du musst einmal tanzen!", "Singe ein Lied!", "Erzähle einen Witz!", "Mache 10 Liegestütze!"];
     let effects = JSON.parse(localStorage.getItem("sevenEffects")) || defaultEffects;
+    let rollingDisabled = false;
 
     const ctx = document.getElementById('statsChart').getContext('2d');
     const statsChart = new Chart(ctx, {
@@ -103,8 +111,9 @@
     });
 
     function rollDice() {
-      const rollBtn = document.getElementById('rollBtn');
-      rollBtn.disabled = true;
+      if (rollingDisabled) return;
+
+      rollingDisabled = true;
 
       const number1 = Math.floor(Math.random() * 6) + 1;
       const number2 = Math.floor(Math.random() * 6) + 1;
@@ -122,13 +131,13 @@
         document.getElementById('effectText').textContent = randomEffect;
         document.getElementById('effectBox').style.display = 'block';
       } else {
-        rollBtn.disabled = false;
+        rollingDisabled = false;
       }
     }
 
     function closeEffect() {
       document.getElementById('effectBox').style.display = 'none';
-      document.getElementById('rollBtn').disabled = false;
+      rollingDisabled = false;
     }
 
     function toggleEdit() {
