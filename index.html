@@ -10,8 +10,13 @@
       text-align: center;
       margin-top: 50px;
     }
-    .dice {
+    .dice-container {
       font-size: 100px;
+      margin: 20px;
+    }
+    .dice {
+      display: inline-block;
+      margin: 0 20px;
     }
     button {
       padding: 10px 20px;
@@ -22,15 +27,21 @@
 <body>
 
   <h1>Würfelaktion</h1>
-  <div class="dice" id="dice">🎲</div>
+  <div class="dice-container">
+    <div class="dice" id="dice1">🎲</div>
+    <div class="dice" id="dice2">🎲</div>
+  </div>
   <button onclick="rollDice()">Würfeln</button>
   <p id="result"></p>
 
   <script>
     function rollDice() {
-      const number = Math.floor(Math.random() * 6) + 1;
-      document.getElementById('dice').textContent = ['⚀','⚁','⚂','⚃','⚄','⚅'][number - 1];
-      document.getElementById('result').textContent = `Du hast eine ${number} gewürfelt!`;
+      const number1 = Math.floor(Math.random() * 6) + 1;
+      const number2 = Math.floor(Math.random() * 6) + 1;
+      const diceFaces = ['⚀','⚁','⚂','⚃','⚄','⚅'];
+      document.getElementById('dice1').textContent = diceFaces[number1 - 1];
+      document.getElementById('dice2').textContent = diceFaces[number2 - 1];
+      document.getElementById('result').textContent = `Du hast eine ${number1} und eine ${number2} gewürfelt!`;
     }
   </script>
 
