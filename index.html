@@ -85,8 +85,16 @@
     <button onclick="saveEffects()">Speichern</button>
   </div>
 
-  <canvas id="statsChart"></canvas>
-  <canvas id="thirdDiceChart"></canvas>
+  
+  <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
+    <div style="width: 300px;">
+      <canvas id="statsChart"></canvas>
+    </div>
+    <div style="width: 300px;">
+      <canvas id="thirdDiceChart"></canvas>
+    </div>
+  </div>
+
   <button id="resetStatsBtn" onclick="resetStats()">Statistik zurücksetzen</button>
 
   <script>
