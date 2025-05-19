@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Würfelaktion</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    .dice {
+      font-size: 100px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Würfelaktion</h1>
+  <div class="dice" id="dice">🎲</div>
+  <button onclick="rollDice()">Würfeln</button>
+  <p id="result"></p>
+
+  <script>
+    function rollDice() {
+      const number = Math.floor(Math.random() * 6) + 1;
+      document.getElementById('dice').textContent = ['⚀','⚁','⚂','⚃','⚄','⚅'][number - 1];
+      document.getElementById('result').textContent = `Du hast eine ${number} gewürfelt!`;
+    }
+  </script>
+
+</body>
+</html>
