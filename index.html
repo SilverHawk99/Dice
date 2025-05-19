@@ -45,6 +45,11 @@
       margin-bottom: 10px;
     }
     #editArea {
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
       display: none;
       text-align: left;
       margin: 20px auto;
@@ -81,8 +86,8 @@
 
   <div id="editArea">
     <h3>Effekte für Summe 7 (einer pro Zeile):</h3>
-    <textarea id="effectInput"></textarea><br>
-    <button onclick="saveEffects()">Speichern</button>
+    <textarea id="effectInput" placeholder="Jeder Effekt in eine neue Zeile schreiben..."></textarea><br>
+    <button onclick="saveEffects()" style="margin-top: 10px;">Speichern</button>
   </div>
 
   
@@ -90,7 +95,7 @@
     <div style="width: 300px;">
       <canvas id="statsChart"></canvas>
     </div>
-    <div style="width: 300px;">
+    <div style="width: 150px;">
       <canvas id="thirdDiceChart"></canvas>
     </div>
   </div>
