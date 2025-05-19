@@ -38,10 +38,11 @@
     function rollDice() {
       const number1 = Math.floor(Math.random() * 6) + 1;
       const number2 = Math.floor(Math.random() * 6) + 1;
+      const sum = number1 + number2;
       const diceFaces = ['⚀','⚁','⚂','⚃','⚄','⚅'];
       document.getElementById('dice1').textContent = diceFaces[number1 - 1];
       document.getElementById('dice2').textContent = diceFaces[number2 - 1];
-      document.getElementById('result').textContent = `Du hast eine ${number1} und eine ${number2} gewürfelt!`;
+      document.getElementById('result').textContent = `Du hast eine ${number1} und eine ${number2} gewürfelt. Summe: ${sum}`;
     }
   </script>
 
