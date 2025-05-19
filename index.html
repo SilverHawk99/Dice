@@ -3,7 +3,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Würfelaktion mit Statistik</title>
+  <title>Würfelaktion mit Effekten</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
@@ -18,10 +18,34 @@
     button {
       padding: 10px 20px;
       font-size: 18px;
+      margin: 10px;
     }
     canvas {
       max-width: 600px;
       margin: 40px auto;
+    }
+    #effectBox {
+      margin: 20px auto;
+      padding: 20px;
+      border: 2px solid #f39c12;
+      background-color: #fff7e6;
+      display: none;
+      max-width: 400px;
+    }
+    #effectText {
+      font-size: 20px;
+      color: #e67e22;
+      margin-bottom: 10px;
+    }
+    #editArea {
+      display: none;
+      text-align: left;
+      margin: 20px auto;
+      max-width: 400px;
+    }
+    textarea {
+      width: 100%;
+      height: 100px;
     }
   </style>
 </head>
@@ -32,14 +56,28 @@
     <div class="dice" id="dice1">🎲</div>
     <div class="dice" id="dice2">🎲</div>
   </div>
-  <button onclick="rollDice()">Würfeln</button>
+  <button id="rollBtn" onclick="rollDice()">Würfeln</button>
+  <button onclick="toggleEdit()">Effekte bearbeiten</button>
   <p id="result"></p>
+
+  <div id="effectBox">
+    <div id="effectText"></div>
+    <button onclick="closeEffect()">Effekt ausführen</button>
+  </div>
+
+  <div id="editArea">
+    <h3>Effekte für Summe 7 (einer pro Zeile):</h3>
+    <textarea id="effectInput"></textarea><br>
+    <button onclick="saveEffects()">Speichern</button>
+  </div>
 
   <canvas id="statsChart"></canvas>
 
   <script>
     const diceFaces = ['⚀','⚁','⚂','⚃','⚄','⚅'];
-    const stats = Array(11).fill(0); // Für Summen 2 bis 12 (Index 0 = Summe 2)
+    const stats = Array(11).fill(0);
+    const defaultEffects = ["Du musst einmal tanzen!", "Singe ein Lied!", "Erzähle einen Witz!", "Mache 10 Liegestütze!"];
+    let effects = JSON.parse(localStorage.getItem("sevenEffects")) || defaultEffects;
 
     const ctx = document.getElementById('statsChart').getContext('2d');
     const statsChart = new Chart(ctx, {
@@ -58,15 +96,16 @@
         scales: {
           y: {
             beginAtZero: true,
-              ticks: {
-              stepSize: 1
-            }
+            ticks: { stepSize: 1 }
           }
         }
       }
     });
 
     function rollDice() {
+      const rollBtn = document.getElementById('rollBtn');
+      rollBtn.disabled = true;
+
       const number1 = Math.floor(Math.random() * 6) + 1;
       const number2 = Math.floor(Math.random() * 6) + 1;
       const sum = number1 + number2;
@@ -77,6 +116,37 @@
 
       stats[sum - 2]++;
       statsChart.update();
+
+      if (sum === 7) {
+        const randomEffect = effects[Math.floor(Math.random() * effects.length)];
+        document.getElementById('effectText').textContent = randomEffect;
+        document.getElementById('effectBox').style.display = 'block';
+      } else {
+        rollBtn.disabled = false;
+      }
+    }
+
+    function closeEffect() {
+      document.getElementById('effectBox').style.display = 'none';
+      document.getElementById('rollBtn').disabled = false;
+    }
+
+    function toggleEdit() {
+      const area = document.getElementById('editArea');
+      const input = document.getElementById('effectInput');
+      if (area.style.display === 'none') {
+        input.value = effects.join("\n");
+        area.style.display = 'block';
+      } else {
+        area.style.display = 'none';
+      }
+    }
+
+    function saveEffects() {
+      const input = document.getElementById('effectInput').value;
+      effects = input.split('\n').map(e => e.trim()).filter(e => e);
+      localStorage.setItem("sevenEffects", JSON.stringify(effects));
+      document.getElementById('editArea').style.display = 'none';
     }
   </script>
 
