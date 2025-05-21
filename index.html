@@ -169,13 +169,18 @@ document.addEventListener('keydown', function(e) {
     Chart.register(ChartDataLabels);
 
 let globalEffects = JSON.parse(localStorage.getItem("globalEffects")) || [
-  "Eine Dürre breitet sich aus.",
-  "Ein Sturm zieht über das Land.",
-  "Ein Handelsabkommen wird geschlossen.",
-  "Ein Aufstand erschüttert die Stadt.",
-  "Ein Fest bringt Wohlstand.",
-  "Ein Piratenüberfall droht.",
-  "Ein Naturwunder wird entdeckt."
+  "Wenn du leer ausgehst nimm dir einen belibigen Rohstoff.",
+  "Lehmbrüche und Erzmienen Produzieren keine Handelswahren mehr,nimm dir statdessen zwei Rohstoffe",
+  "Forste und Weiden produzieren keine Handelswahren mehr,nimm dir statdessen zwei Rohstoffe",
+  "Felder und Weiden produzieren keine Handelswahren mehr,nimm dir statdessen zwei Rohstoffe",
+  "Der Spieler mit den Wenigsten Siegpunkten darf Städte und Siedlungen einen Rohstoff günstiger Bauen",
+  "Statt einer Fortschrittskarte erhilt man zwei, zählt nur für den Aktiven Spieler",
+  "Lehmbrüche liefern keine Waren mehr!"
+  "Erzmienen liefern keine Waren mehr!"
+  "Forste liefern keine Waren mehr!"
+  "Weiden liefern keine Waren mehr!"
+  "Getreidefelder liefern keine Waren mehr!"
+  "Küsten liefern keine Waren mehr!"
 ];
 let totalRolls = 0;
 let lastGlobalEffect = "";
