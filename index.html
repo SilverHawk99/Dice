@@ -89,6 +89,7 @@
 </head>
 <body>
   <button id="editButton" onclick="toggleEdit()">Effekte bearbeiten</button>
+<button id="globalEditButton" onclick="toggleGlobalEdit()" style="position: absolute; top: 100px; left: 20px; padding: 8px 16px; font-size: 14px;">Globale Effekte bearbeiten</button>
   <button id="toggleStatsButton" onclick="toggleStats()" style="position: absolute; top: 60px; left: 20px; padding: 8px 16px; font-size: 14px;">Statistiken ein-/ausblenden</button>
 
   <h1>Würfelaktion</h1>
@@ -108,13 +109,23 @@
     <button onclick="closeEffect()" style="position: absolute; bottom: 20px; right: 20px; font-size: 20px; background-color: #2ecc71; color: white; border: none; border-radius: 5px; padding: 8px 12px; cursor: pointer;">✔</button>
   </div>
 
-  <div id="editArea">
+  
+<div id="globalEditArea" style="display: none; text-align: left; margin: 20px auto; max-width: 400px; border: 1px solid #ccc; background-color: #eef; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+  <h3>Globale Effekte (einer pro Zeile):</h3>
+  <textarea id="globalEffectInput" placeholder="Jeder globale Effekt in eine neue Zeile schreiben..."></textarea><br>
+  <button onclick="saveGlobalEffects()" style="margin-top: 10px;">Speichern</button>
+</div>
+
+
+<div id="editArea">
     <h3>Effekte für Summe 7 (einer pro Zeile):</h3>
     <textarea id="effectInput" placeholder="Jeder Effekt in eine neue Zeile schreiben..."></textarea><br>
     <button onclick="saveEffects()" style="margin-top: 10px;">Speichern</button>
   </div>
 
-  <div id="statsContainer" style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
+  <div id="globalEffectBox" style="display:none; margin: 20px auto; max-width: 600px; font-size: 18px; padding: 10px; border: 2px solid #555; background: #eef7ff; font-weight: bold; border-radius: 10px;"></div>
+
+<div id="statsContainer" style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
     <div style="width: 400px; height: 300px;">
       <canvas id="statsChart"></canvas>
     </div>
@@ -130,6 +141,42 @@
 
   <script>
     Chart.register(ChartDataLabels);
+
+let globalEffects = JSON.parse(localStorage.getItem("globalEffects")) || [
+  "Eine Dürre breitet sich aus.",
+  "Ein Sturm zieht über das Land.",
+  "Ein Handelsabkommen wird geschlossen.",
+  "Ein Aufstand erschüttert die Stadt.",
+  "Ein Fest bringt Wohlstand.",
+  "Ein Piratenüberfall droht.",
+  "Ein Naturwunder wird entdeckt."
+];
+let totalRolls = 0;
+let lastGlobalEffect = "";
+
+function showGlobalEffect(effect) {
+  document.getElementById("globalEffectBox").textContent = effect;
+  document.getElementById("globalEffectBox").style.display = "block";
+}
+
+function toggleGlobalEdit() {
+  const area = document.getElementById("globalEditArea");
+  const input = document.getElementById("globalEffectInput");
+  if (area.style.display === 'none') {
+    input.value = globalEffects.join("\n");
+    area.style.display = 'block';
+  } else {
+    area.style.display = 'none';
+  }
+}
+
+function saveGlobalEffects() {
+  const input = document.getElementById("globalEffectInput").value;
+  globalEffects = input.split('\n').map(e => e.trim()).filter(e => e);
+  localStorage.setItem("globalEffects", JSON.stringify(globalEffects));
+  document.getElementById("globalEditArea").style.display = 'none';
+}
+
 
     const diceFaces = ['⚀','⚁','⚂','⚃','⚄','⚅'];
     const thirdDiceFaces = ['Vorrücken','Stehenbleiben'];
@@ -214,6 +261,13 @@
     });
 
     function rollDice() {
+  totalRolls++;
+  if (totalRolls >= 7 && (totalRolls - 7) % 8 === 0) {
+    lastGlobalEffect = globalEffects[Math.floor(Math.random() * globalEffects.length)];
+    showGlobalEffect(lastGlobalEffect);
+  } else if (lastGlobalEffect) {
+    showGlobalEffect(lastGlobalEffect);
+  }
       if (rollingDisabled) return;
       rollingDisabled = true;
 
