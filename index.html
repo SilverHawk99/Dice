@@ -115,7 +115,7 @@
   <script>
     const diceFaces = ['⚀','⚁','⚂','⚃','⚄','⚅'];
     const thirdDiceFaces = ['Vorrücken','Stehenbleiben'];
-    const defaultEffects = ["Knappheit:Jeder Spieler wählt eine Rohstoff- oder Handelswarenkarte und gibt sie ab. Sie wird in den Vorrat zurückgelegt.", "Singe ein Lied!", "Erzähle einen Witz!", "Mache 10 Liegestütze!"];
+    const defaultEffects = ["Knappheit:Jeder Spieler wählt eine Rohstoff- oder Handelswarenkarte und gibt sie ab. Sie wird in den Vorrat zurückgelegt.", "Ein Wirbelsturm zieht auf:Jeder Spieler würfelt mit einem Würfel: Bei 1–2 muss er eine Straße oder ein Schiff vom Spielplan entfernen fals möglich.", "Korruption:Jeder Spieler muss eine Fortschrittskarte abgeben.", "Feuer im Lager:Jeder Spieler muss einen Rohstoff und eine Handelsware abgeben. Wer nichts hat muss auch nichts abgeben.", "Unruhe:Ein Ritter jedes Spielers wird deaktiviert (der stärkste).", "Mache 10 Liegestütze!"];
     let effects = JSON.parse(localStorage.getItem("sevenEffects")) || defaultEffects;
     let stats = JSON.parse(localStorage.getItem("diceStats")) || Array(11).fill(0);
     let thirdDiceStats = JSON.parse(localStorage.getItem("thirdDiceStats")) || [0, 0];
