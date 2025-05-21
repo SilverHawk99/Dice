@@ -1,9 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8">
   <title>Würfelaktion mit Effekten</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -118,6 +120,8 @@
   <button id="resetStatsBtn" onclick="resetStats()">Statistik zurücksetzen</button>
 
   <script>
+    Chart.register(ChartDataLabels);
+
     const diceFaces = ['⚀','⚁','⚂','⚃','⚄','⚅'];
     const thirdDiceFaces = ['Vorrücken','Stehenbleiben'];
     const fourthDiceColors = ['🔵','🟡','🟢','🟣','🔴','⚫'];
@@ -161,6 +165,18 @@
           data: thirdDiceStats,
           backgroundColor: ['#2ecc71', '#e74c3c']
         }]
+      },
+      options: {
+        plugins: {
+          datalabels: {
+            formatter: (value, context) => {
+              const sum = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+              return sum ? (value / sum * 100).toFixed(1) + '%' : '0%';
+            },
+            color: '#fff',
+            font: { weight: 'bold', size: 14 }
+          }
+        }
       }
     });
 
@@ -173,6 +189,18 @@
           data: fourthDiceStats,
           backgroundColor: ['#3498db', '#f1c40f', '#2ecc71', '#e84393', '#e74c3c', '#34495e']
         }]
+      },
+      options: {
+        plugins: {
+          datalabels: {
+            formatter: (value, context) => {
+              const sum = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+              return sum ? (value / sum * 100).toFixed(1) + '%' : '0%';
+            },
+            color: '#fff',
+            font: { weight: 'bold', size: 14 }
+          }
+        }
       }
     });
 
