@@ -40,7 +40,7 @@
       border: 3px solid #e67e22;
       border-radius: 12px;
       padding: 30px;
-      width: 300px;
+      width: 400px; height: 300px;
       max-width: 90%;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
       text-align: center;
@@ -56,7 +56,7 @@
     #effectText {
       font-size: 20px;
       color: #e67e22;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     }
     #editArea {
       display: none;
@@ -94,9 +94,9 @@
   <p id="thirdResult"></p>
 
   <div id="effectBox">
-    <div id="effectTitle" style="font-size: 22px; font-weight: bold; color: #d35400; margin-bottom: 10px;"></div>
+    <div id="effectTitle" style="font-size: 22px; font-weight: bold; color: #d35400; margin-bottom: 20px;"></div>
     <div id="effectText" style="font-size: 16px;"></div>
-    <button onclick="closeEffect()">Effekt ausführen</button>
+    <button onclick="closeEffect()" style="position: absolute; bottom: 20px; right: 20px; font-size: 20px; background-color: #2ecc71; color: white; border: none; border-radius: 5px; padding: 8px 12px; cursor: pointer;">✔</button>
   </div>
 
   <div id="editArea">
@@ -106,10 +106,10 @@
   </div>
 
   <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
-    <div style="width: 300px;">
+    <div style="width: 400px; height: 300px;">
       <canvas id="statsChart"></canvas>
     </div>
-    <div style="width: 300px;">
+    <div style="width: 400px; height: 300px;">
       <canvas id="thirdDiceChart"></canvas>
     </div>
   </div>
