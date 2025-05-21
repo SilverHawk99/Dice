@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Würfelaktion mit Effekten</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    #editButton {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 8px 16px;
+      font-size: 14px;
+    }
+    .dice-container {
+      font-size: 80px;
+      margin: 20px;
+    }
+    .dice {
+      display: inline-block;
+      margin: 0 20px;
+      cursor: pointer;
+    }
+    .dice:hover {
+      transform: scale(1.2);
+      transition: transform 0.2s ease;
+    }
+    canvas {
+      max-width: 100%;
+    }
+    #effectBox {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+      background: #fffdf7;
+      border: 3px solid #e67e22;
+      border-radius: 12px;
+      padding: 30px;
+      width: 90vw;
+      max-width: 400px;
+      height: 300px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      display: none;
+    }
+    #effectText {
+      font-size: 20px;
+      color: #e67e22;
+      margin-bottom: 20px;
+    }
+    #editArea {
+      display: none;
+      text-align: left;
+      margin: 20px auto;
+      max-width: 400px;
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    #resetStatsBtn {
+      margin-top: 10px;
+      font-size: 14px;
+      padding: 5px 10px;
+    }
+    textarea {
+      width: 100%;
+      height: 100px;
+    }
+  </style>
+</head>
+<body>
+  <button id="editButton" onclick="toggleEdit()">Effekte bearbeiten</button>
+
+  <h1>Würfelaktion</h1>
+  <div class="dice-container">
+    <div class="dice" id="dice1" onclick="rollDice()">🎲</div>
+    <div class="dice" id="dice2" onclick="rollDice()">🎲</div>
+    <div class="dice" id="dice3" onclick="rollDice()">🟡</div>
+  </div>
+  <p id="result"></p>
+  <p id="thirdResult"></p>
+
+  <div id="effectBox">
+    <div id="effectTitle" style="font-size: 22px; font-weight: bold; color: #d35400; margin-bottom: 20px;"></div>
+    <div id="effectText" style="font-size: 16px;"></div>
+    <button onclick="closeEffect()" style="position: absolute; bottom: 20px; right: 20px; font-size: 20px; background-color: #2ecc71; color: white; border: none; border-radius: 5px; padding: 8px 12px; cursor: pointer;">✔</button>
+  </div>
+
+  <div id="editArea">
+    <h3>Effekte für Summe 7 (einer pro Zeile):</h3>
+    <textarea id="effectInput" placeholder="Jeder Effekt in eine neue Zeile schreiben..."></textarea><br>
+    <button onclick="saveEffects()" style="margin-top: 10px;">Speichern</button>
+  </div>
+
+  <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
+    <div style="width: 400px; height: 300px;">
+      <canvas id="statsChart"></canvas>
+    </div>
+    <div style="width: 400px; height: 300px;">
+      <canvas id="thirdDiceChart"></canvas>
+    </div>
+  </div>
+
+  <button id="resetStatsBtn" onclick="resetStats()">Statistik zurücksetzen</button>
+
+  <script>
+    const diceFaces = ['⚀','⚁','⚂','⚃','⚄','⚅'];
+    const thirdDiceFaces = ['Vorrücken','Stehenbleiben'];
+    const defaultEffects = ["Du musst einmal tanzen!", "Singe ein Lied!", "Erzähle einen Witz!", "Mache 10 Liegestütze!"];
+    let effects = JSON.parse(localStorage.getItem("sevenEffects")) || defaultEffects;
+    let stats = JSON.parse(localStorage.getItem("diceStats")) || Array(11).fill(0);
+    let thirdDiceStats = JSON.parse(localStorage.getItem("thirdDiceStats")) || [0, 0];
+    let rollingDisabled = false;
+
+    const ctx1 = document.getElementById('statsChart').getContext('2d');
+    const statsChart = new Chart(ctx1, {
+      type: 'bar',
+      data: {
+        labels: Array.from({length: 11}, (_, i) => (i + 2).toString()),
+        datasets: [{
+          label: 'Häufigkeit der gewürfelten Summe',
+          data: stats,
+          backgroundColor: 'rgba(54, 162, 235, 0.7)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 }
+          }
+        }
+      }
+    });
+
+    const ctx2 = document.getElementById('thirdDiceChart').getContext('2d');
+    const thirdDiceChart = new Chart(ctx2, {
+      type: 'pie',
+      data: {
+        labels: ['Vorrücken', 'Stehenbleiben'],
+        datasets: [{
+          label: 'Häufigkeit dritter Würfel',
+          data: thirdDiceStats,
+          backgroundColor: ['#2ecc71', '#e74c3c']
+        }]
+      }
+    });
+
+    function rollDice() {
+      if (rollingDisabled) return;
+
+      rollingDisabled = true;
+
+      const number1 = Math.floor(Math.random() * 6) + 1;
+      const number2 = Math.floor(Math.random() * 6) + 1;
+      const third = Math.floor(Math.random() * 6);
+      const thirdOutcome = third < 3 ? 'Vorrücken' : 'Stehenbleiben';
+      const sum = number1 + number2;
+
+      document.getElementById('dice1').textContent = diceFaces[number1 - 1];
+      document.getElementById('dice2').textContent = diceFaces[number2 - 1];
+      document.getElementById('dice3').textContent = thirdOutcome === 'Vorrücken' ? '➡️' : '⛔️';
+      document.getElementById('result').textContent = `Gesamtergebnis: ${sum}`;
+      document.getElementById('thirdResult').textContent = `Dritter Würfel: ${thirdOutcome}`;
+
+      stats[sum - 2]++;
+      localStorage.setItem("diceStats", JSON.stringify(stats));
+      statsChart.update();
+
+      if (thirdOutcome === 'Vorrücken') thirdDiceStats[0]++;
+      else thirdDiceStats[1]++;
+      localStorage.setItem("thirdDiceStats", JSON.stringify(thirdDiceStats));
+      thirdDiceChart.update();
+
+      if (sum === 7) {
+        const randomEffect = effects[Math.floor(Math.random() * effects.length)];
+        const [title, ...textParts] = randomEffect.split(":");
+        const effectTitle = title?.trim() || "Ereignis";
+        const effectText = textParts.join(":").trim();
+        document.getElementById('effectTitle').textContent = effectTitle;
+        document.getElementById('effectText').textContent = effectText;
+        document.getElementById('effectBox').style.display = 'block';
+      } else {
+        rollingDisabled = false;
+      }
+    }
+
+    function closeEffect() {
+      document.getElementById('effectBox').style.display = 'none';
+      rollingDisabled = false;
+    }
+
+    function toggleEdit() {
+      const area = document.getElementById('editArea');
+      const input = document.getElementById('effectInput');
+      if (area.style.display === 'none') {
+        input.value = effects.join("\n");
+        area.style.display = 'block';
+      } else {
+        area.style.display = 'none';
+      }
+    }
+
+    function saveEffects() {
+      const input = document.getElementById('effectInput').value;
+      effects = input.split('\n').map(e => e.trim()).filter(e => e);
+      localStorage.setItem("sevenEffects", JSON.stringify(effects));
+      document.getElementById('editArea').style.display = 'none';
+    }
+
+    function resetStats() {
+      stats = Array(11).fill(0);
+      thirdDiceStats = [0, 0];
+      localStorage.setItem("diceStats", JSON.stringify(stats));
+      localStorage.setItem("thirdDiceStats", JSON.stringify(thirdDiceStats));
+      statsChart.data.datasets[0].data = stats;
+      statsChart.update();
+      thirdDiceChart.data.datasets[0].data = thirdDiceStats;
+      thirdDiceChart.update();
+    }
+  </script>
+</body>
+</html>
