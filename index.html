@@ -4,8 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Würfelaktion mit Effekten</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>function toggleStats() {
+  <script src="https://cdn.jsdelivr.net/npm/chart.js">function toggleStats() {
   const statsContainer = document.getElementById('statsContainer');
   statsContainer.style.display = statsContainer.style.display === 'none' ? 'flex' : 'none';
 }
@@ -176,11 +175,11 @@ let globalEffects = JSON.parse(localStorage.getItem("globalEffects")) || [
   "Felder und Weiden produzieren keine Handelswahren mehr,nimm dir statdessen zwei Rohstoffe",
   "Der Spieler mit den Wenigsten Siegpunkten darf Städte und Siedlungen einen Rohstoff günstiger Bauen",
   "Statt einer Fortschrittskarte erhilt man zwei, zählt nur für den Aktiven Spieler",
-  "Lehmbrüche liefern keine Waren mehr!"
-  "Erzmienen liefern keine Waren mehr!"
-  "Forste liefern keine Waren mehr!"
-  "Weiden liefern keine Waren mehr!"
-  "Getreidefelder liefern keine Waren mehr!"
+  "Lehmbrüche liefern keine Waren mehr!",
+  "Erzmienen liefern keine Waren mehr!",
+  "Forste liefern keine Waren mehr!",
+  "Weiden liefern keine Waren mehr!",
+  "Getreidefelder liefern keine Waren mehr!",
   "Küsten liefern keine Waren mehr!"
 ];
 let totalRolls = 0;
