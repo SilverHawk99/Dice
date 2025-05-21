@@ -4,7 +4,22 @@
 <head>
   <meta charset="UTF-8">
   <title>Würfelaktion mit Effekten</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js">
+// Reset-Dialog & Button-Handler
+document.getElementById("reset-all").addEventListener("click", () => {
+  document.getElementById("reset-confirmation").classList.remove("hidden");
+});
+
+document.getElementById("cancel-reset").addEventListener("click", () => {
+  document.getElementById("reset-confirmation").classList.add("hidden");
+});
+
+document.getElementById("confirm-reset").addEventListener("click", () => {
+  localStorage.clear();
+  location.reload();
+});
+
+</script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -233,7 +248,22 @@
       thirdDiceChart.data.datasets[0].data = thirdDiceStats;
       thirdDiceChart.update();
     }
-  </script>
+  
+// Reset-Dialog & Button-Handler
+document.getElementById("reset-all").addEventListener("click", () => {
+  document.getElementById("reset-confirmation").classList.remove("hidden");
+});
+
+document.getElementById("cancel-reset").addEventListener("click", () => {
+  document.getElementById("reset-confirmation").classList.add("hidden");
+});
+
+document.getElementById("confirm-reset").addEventListener("click", () => {
+  localStorage.clear();
+  location.reload();
+});
+
+</script>
 
 
 <button id="reset-all" class="px-4 py-2 bg-red-600 text-white rounded absolute bottom-4 left-4">Standard Wiederherstellen</button>
