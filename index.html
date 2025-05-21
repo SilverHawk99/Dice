@@ -8,14 +8,40 @@
   const statsContainer = document.getElementById('statsContainer');
   statsContainer.style.display = statsContainer.style.display === 'none' ? 'flex' : 'none';
 }
+
+// Rechtsklick deaktivieren
+document.addEventListener('contextmenu', event => event.preventDefault());
+
+// Tastenkombinationen blockieren
+document.addEventListener('keydown', function(e) {
+  if (e.ctrlKey && ['u', 'c', 'x', 's'].includes(e.key.toLowerCase())) {
+    e.preventDefault();
+  }
+});
+
 </script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels">function toggleStats() {
   const statsContainer = document.getElementById('statsContainer');
   statsContainer.style.display = statsContainer.style.display === 'none' ? 'flex' : 'none';
 }
+
+// Rechtsklick deaktivieren
+document.addEventListener('contextmenu', event => event.preventDefault());
+
+// Tastenkombinationen blockieren
+document.addEventListener('keydown', function(e) {
+  if (e.ctrlKey && ['u', 'c', 'x', 's'].includes(e.key.toLowerCase())) {
+    e.preventDefault();
+  }
+});
+
 </script>
   <style>
     body {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
       font-family: Arial, sans-serif;
       text-align: center;
       margin-top: 50px;
@@ -357,6 +383,17 @@ function saveGlobalEffects() {
   const statsContainer = document.getElementById('statsContainer');
   statsContainer.style.display = statsContainer.style.display === 'none' ? 'flex' : 'none';
 }
+
+// Rechtsklick deaktivieren
+document.addEventListener('contextmenu', event => event.preventDefault());
+
+// Tastenkombinationen blockieren
+document.addEventListener('keydown', function(e) {
+  if (e.ctrlKey && ['u', 'c', 'x', 's'].includes(e.key.toLowerCase())) {
+    e.preventDefault();
+  }
+});
+
 </script>
 </body>
 </html>
