@@ -1,9 +1,18 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8">
   <title>Würfelaktion mit Effekten</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js">
+  location.reload();
+});
+
+
+  location.reload();
+});
+
+</script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -26,10 +35,6 @@
       margin: 0 20px;
       cursor: pointer;
     }
-    .dice:hover {
-      transform: scale(1.2);
-      transition: transform 0.2s ease;
-    }
     canvas {
       max-width: 100%;
     }
@@ -43,12 +48,18 @@
       border: 3px solid #e67e22;
       border-radius: 12px;
       padding: 30px;
-      width: 90vw;
-      max-width: 400px;
-      height: 300px;
+      width: 400px; height: 300px;
+      max-width: 90%;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
       text-align: center;
       display: none;
+    }
+      margin: 20px auto;
+      padding: 20px;
+      border: 2px solid #f39c12;
+      background-color: #fff7e6;
+      display: none;
+      max-width: 400px;
     }
     #effectText {
       font-size: 20px;
@@ -78,6 +89,7 @@
   </style>
 </head>
 <body>
+
   <button id="editButton" onclick="toggleEdit()">Effekte bearbeiten</button>
 
   <h1>Würfelaktion</h1>
@@ -115,7 +127,8 @@
   <script>
     const diceFaces = ['⚀','⚁','⚂','⚃','⚄','⚅'];
     const thirdDiceFaces = ['Vorrücken','Stehenbleiben'];
-    const defaultEffects = ["Du musst einmal tanzen!", "Singe ein Lied!", "Erzähle einen Witz!", "Mache 10 Liegestütze!"];
+    const defaultEffects = ["Knappheit: Jeder Spieler wählt eine Rohstoff- oder Handelswarenkarte und gibt sie ab. Sie wird in den Vorrat zurückgelegt.
+", "Singe ein Lied!", "Erzähle einen Witz!", "Mache 10 Liegestütze!"];
     let effects = JSON.parse(localStorage.getItem("sevenEffects")) || defaultEffects;
     let stats = JSON.parse(localStorage.getItem("diceStats")) || Array(11).fill(0);
     let thirdDiceStats = JSON.parse(localStorage.getItem("thirdDiceStats")) || [0, 0];
@@ -186,10 +199,10 @@
       if (sum === 7) {
         const randomEffect = effects[Math.floor(Math.random() * effects.length)];
         const [title, ...textParts] = randomEffect.split(":");
-        const effectTitle = title?.trim() || "Ereignis";
-        const effectText = textParts.join(":").trim();
-        document.getElementById('effectTitle').textContent = effectTitle;
-        document.getElementById('effectText').textContent = effectText;
+      const effectTitle = title?.trim() || "Ereignis";
+      const effectText = textParts.join(":").trim();
+      document.getElementById('effectTitle').textContent = effectTitle;
+      document.getElementById('effectText').textContent = effectText;
         document.getElementById('effectBox').style.display = 'block';
       } else {
         rollingDisabled = false;
@@ -229,6 +242,23 @@
       thirdDiceChart.data.datasets[0].data = thirdDiceStats;
       thirdDiceChart.update();
     }
-  </script>
+  
+  location.reload();
+});
+
+
+  location.reload();
+});
+
+</script>
+
+
+
+  </div>
+</div>
+
+
+  </div>
+</div>
 </body>
 </html>
