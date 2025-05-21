@@ -4,22 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Würfelaktion mit Effekten</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js">
-// Reset-Dialog & Button-Handler
-document.getElementById("reset-all").addEventListener("click", () => {
-  document.getElementById("reset-confirmation").classList.remove("hidden");
-});
-
-document.getElementById("cancel-reset").addEventListener("click", () => {
-  document.getElementById("reset-confirmation").classList.add("hidden");
-});
-
-document.getElementById("confirm-reset").addEventListener("click", () => {
-  localStorage.clear();
-  location.reload();
-});
-
-</script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -248,35 +233,7 @@ document.getElementById("confirm-reset").addEventListener("click", () => {
       thirdDiceChart.data.datasets[0].data = thirdDiceStats;
       thirdDiceChart.update();
     }
-  
-// Reset-Dialog & Button-Handler
-document.getElementById("reset-all").addEventListener("click", () => {
-  document.getElementById("reset-confirmation").classList.remove("hidden");
-});
-
-document.getElementById("cancel-reset").addEventListener("click", () => {
-  document.getElementById("reset-confirmation").classList.add("hidden");
-});
-
-document.getElementById("confirm-reset").addEventListener("click", () => {
-  localStorage.clear();
-  location.reload();
-});
-
-</script>
-
-
-<button id="reset-all" class="px-4 py-2 bg-red-600 text-white rounded absolute bottom-4 left-4">Standard Wiederherstellen</button>
-
-<div id="reset-confirmation" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center hidden z-50">
-  <div class="bg-white p-6 rounded-lg w-96 relative">
-    <h2 class="text-red-600 text-xl font-bold mb-4 text-center">Sicher das sie alle Daten zurücksetzen wollen, ein Wiederherstellen ist dan nicht mehr Möglich</h2>
-    <div class="flex justify-between">
-      <button id="cancel-reset" class="bg-gray-400 text-white px-4 py-2 rounded">Abbruch</button>
-      <button id="confirm-reset" class="bg-red-600 text-white px-4 py-2 rounded">Ich bin mir sicher</button>
-    </div>
-  </div>
-</div>
+  </script>
 
 </body>
 </html>
