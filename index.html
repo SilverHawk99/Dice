@@ -4,8 +4,16 @@
 <head>
   <meta charset="UTF-8">
   <title>Würfelaktion mit Effekten</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js">function toggleStats() {
+  const statsContainer = document.getElementById('statsContainer');
+  statsContainer.style.display = statsContainer.style.display === 'none' ? 'flex' : 'none';
+}
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels">function toggleStats() {
+  const statsContainer = document.getElementById('statsContainer');
+  statsContainer.style.display = statsContainer.style.display === 'none' ? 'flex' : 'none';
+}
+</script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -81,6 +89,7 @@
 </head>
 <body>
   <button id="editButton" onclick="toggleEdit()">Effekte bearbeiten</button>
+  <button id="toggleStatsButton" onclick="toggleStats()" style="position: absolute; top: 60px; left: 20px; padding: 8px 16px; font-size: 14px;">Statistiken ein-/ausblenden</button>
 
   <h1>Würfelaktion</h1>
   <div class="dice-container">
@@ -105,7 +114,7 @@
     <button onclick="saveEffects()" style="margin-top: 10px;">Speichern</button>
   </div>
 
-  <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
+  <div id="statsContainer" style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
     <div style="width: 400px; height: 300px;">
       <canvas id="statsChart"></canvas>
     </div>
@@ -290,6 +299,10 @@
       thirdDiceChart.update();
       fourthDiceChart.update();
     }
-  </script>
+  function toggleStats() {
+  const statsContainer = document.getElementById('statsContainer');
+  statsContainer.style.display = statsContainer.style.display === 'none' ? 'flex' : 'none';
+}
+</script>
 </body>
 </html>
