@@ -115,7 +115,7 @@
   <script>
     const diceFaces = ['⚀','⚁','⚂','⚃','⚄','⚅'];
     const thirdDiceFaces = ['Vorrücken','Stehenbleiben'];
-    const defaultEffects = ["Du musst einmal tanzen!", "Singe ein Lied!", "Erzähle einen Witz!", "Mache 10 Liegestütze!"];
+    const defaultEffects = ["Du musst einmal tanzen!:jetzt", "Singe ein Lied!", "Erzähle einen Witz!", "Mache 10 Liegestütze!"];
     let effects = JSON.parse(localStorage.getItem("sevenEffects")) || defaultEffects;
     let stats = JSON.parse(localStorage.getItem("diceStats")) || Array(11).fill(0);
     let thirdDiceStats = JSON.parse(localStorage.getItem("thirdDiceStats")) || [0, 0];
