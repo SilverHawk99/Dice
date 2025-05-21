@@ -5,32 +5,10 @@
   <meta charset="UTF-8">
   <title>Würfelaktion mit Effekten</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js">
-// Reset-Dialog & Button-Handler
-document.getElementById("reset-all").addEventListener("click", () => {
-  document.getElementById("reset-confirmation").classList.remove("hidden");
-});
-
-document.getElementById("cancel-reset").addEventListener("click", () => {
-  document.getElementById("reset-confirmation").classList.add("hidden");
-});
-
-document.getElementById("confirm-reset").addEventListener("click", () => {
-  localStorage.clear();
   location.reload();
 });
 
 
-// Reset-Dialog & Button-Handler
-document.getElementById("reset-all").addEventListener("click", () => {
-  document.getElementById("reset-confirmation").style.display = "flex";
-});
-
-document.getElementById("cancel-reset").addEventListener("click", () => {
-  document.getElementById("reset-confirmation").style.display = "none";
-});
-
-document.getElementById("confirm-reset").addEventListener("click", () => {
-  localStorage.clear();
   location.reload();
 });
 
@@ -264,63 +242,21 @@ document.getElementById("confirm-reset").addEventListener("click", () => {
       thirdDiceChart.update();
     }
   
-// Reset-Dialog & Button-Handler
-document.getElementById("reset-all").addEventListener("click", () => {
-  document.getElementById("reset-confirmation").classList.remove("hidden");
-});
-
-document.getElementById("cancel-reset").addEventListener("click", () => {
-  document.getElementById("reset-confirmation").classList.add("hidden");
-});
-
-document.getElementById("confirm-reset").addEventListener("click", () => {
-  localStorage.clear();
   location.reload();
 });
 
 
-// Reset-Dialog & Button-Handler
-document.getElementById("reset-all").addEventListener("click", () => {
-  document.getElementById("reset-confirmation").style.display = "flex";
-});
-
-document.getElementById("cancel-reset").addEventListener("click", () => {
-  document.getElementById("reset-confirmation").style.display = "none";
-});
-
-document.getElementById("confirm-reset").addEventListener("click", () => {
-  localStorage.clear();
   location.reload();
 });
 
 </script>
 
 
-<button id="reset-all" style="position: absolute; bottom: 20px; left: 20px; padding: 8px 16px; font-size: 14px; background-color: #e74c3c; color: white; border: none; border-radius: 4px;">Standard Wiederherstellen</button>
 
-<div id="reset-confirmation" class="hidden" style="position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 99999;">
-  <div style="background: white; padding: 20px; border-radius: 10px; width: 400px; text-align: center;">
-    <h2 style="color: red; font-size: 20px; font-weight: bold; margin-bottom: 20px;">
-      Sicher das sie alle Daten zurücksetzen wollen, ein Wiederherstellen ist dan nicht mehr Möglich
-    </h2>
-    <div style="display: flex; justify-content: space-between;">
-      <button id="cancel-reset" style="background-color: gray; color: white; padding: 10px 20px; border-radius: 5px;">Abbruch</button>
-      <button id="confirm-reset" style="background-color: red; color: white; padding: 10px 20px; border-radius: 5px;">Ich bin mir sicher</button>
-    </div>
   </div>
 </div>
 
-<button id="reset-all" style="position: absolute; bottom: 20px; left: 20px; padding: 8px 16px; font-size: 14px; background-color: #e74c3c; color: white; border: none; border-radius: 4px;">Standard Wiederherstellen</button>
 
-<div id="reset-confirmation" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 99999;">
-  <div style="background: white; padding: 20px; border-radius: 10px; width: 400px; text-align: center;">
-    <h2 style="color: red; font-size: 20px; font-weight: bold; margin-bottom: 20px;">
-      Sicher das sie alle Daten zurücksetzen wollen, ein Wiederherstellen ist dan nicht mehr Möglich
-    </h2>
-    <div style="display: flex; justify-content: space-between;">
-      <button id="cancel-reset" style="background-color: gray; color: white; padding: 10px 20px; border-radius: 5px;">Abbruch</button>
-      <button id="confirm-reset" style="background-color: red; color: white; padding: 10px 20px; border-radius: 5px;">Ich bin mir sicher</button>
-    </div>
   </div>
 </div>
 </body>
