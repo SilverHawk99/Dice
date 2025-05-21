@@ -28,8 +28,7 @@
       cursor: pointer;
     }
     canvas {
-      max-width: 600px;
-      margin: 40px auto;
+      max-width: 100%;
     }
     #effectBox {
       margin: 20px auto;
@@ -45,15 +44,15 @@
       margin-bottom: 10px;
     }
     #editArea {
+      display: none;
+      text-align: left;
+      margin: 20px auto;
+      max-width: 400px;
       border: 1px solid #ccc;
       background-color: #f9f9f9;
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      display: none;
-      text-align: left;
-      margin: 20px auto;
-      max-width: 400px;
     }
     #resetStatsBtn {
       margin-top: 10px;
@@ -90,12 +89,11 @@
     <button onclick="saveEffects()" style="margin-top: 10px;">Speichern</button>
   </div>
 
-  
   <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
     <div style="width: 300px;">
       <canvas id="statsChart"></canvas>
     </div>
-    <div style="width: 150px;">
+    <div style="width: 300px;">
       <canvas id="thirdDiceChart"></canvas>
     </div>
   </div>
